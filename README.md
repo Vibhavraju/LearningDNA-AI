@@ -243,18 +243,16 @@ BKT was fitted on the first 70% of each learner's answers and used to predict th
 
 | Name | Role |
 |---|---|
-| _Your name_ | Project Lead |
-| _Name_ | Product / UX |
-| _Name_ | Frontend |
-| _Name_ | ML Engineering |
-| _Name_ | Backend / AI |
-| _Name_ | Evaluation / QA |
+| P.SriVibhav | Project Lead |
+| P.Srivibhav | Product / UX |
+| P.Srivibhav | Frontend |
+| P.Srivibhav | ML Engineering |
+| P.Srivibhav | Backend / AI |
+| P.Srivibhav| Evaluation / QA |
 
 ---
 
-## 📄 License
 
-Add your license here (for example MIT), or remove this section.
 
 ---
 
