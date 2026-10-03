@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-sans bg-slate-50 text-slate-900 antialiased;
+    background-image: radial-gradient(60rem 30rem at 100% -10%, rgb(99 102 241 / 0.08), transparent 60%),
+      radial-gradient(40rem 24rem at -10% 110%, rgb(14 165 233 / 0.07), transparent 60%);
+    background-attachment: fixed;
+  }
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-indigo-600;
+  }
+}
+
+@layer components {
+  .app-card {
+    @apply rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm shadow-slate-200/60;
+  }
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm shadow-indigo-600/20 transition hover:bg-indigo-700 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 active:scale-[0.98];
+  }
+  .page-title {
+    @apply text-3xl font-extrabold tracking-tight text-slate-900;
+  }
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-sm font-semibold;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+@media print {
+  aside, header.no-print, .no-print { display: none !important; }
+  main { padding: 0 !important; overflow: visible !important; }
+  body { background: #fff !important; }
+}

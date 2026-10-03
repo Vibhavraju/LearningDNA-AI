@@ -1,0 +1,71 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main]
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_USER: learning_dna
+          POSTGRES_PASSWORD: learning_dna
+          POSTGRES_DB: learning_dna_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U learning_dna"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: cd backend && pip install -r requirements.txt
+      - name: Lint
+        run: cd backend && ruff check .
+      - name: Test
+        env:
+          DATABASE_URL: postgresql+asyncpg://learning_dna:learning_dna@localhost:5432/learning_dna_test
+          DATABASE_URL_SYNC: postgresql://learning_dna:learning_dna@localhost:5432/learning_dna_test
+          REDIS_URL: redis://localhost:6379/0
+          CELERY_BROKER_URL: redis://localhost:6379/1
+          CELERY_RESULT_BACKEND: redis://localhost:6379/2
+          SECRET_KEY: test-secret-key
+          CELERY_TASK_ALWAYS_EAGER: "true"
+          LLM_PROVIDER: mock
+          DEMO_MODE: "true"
+        run: cd backend && alembic upgrade head && python -m pytest tests/ -v
+
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Install
+        run: cd frontend && npm ci
+      - name: Lint
+        run: cd frontend && npm run lint
+      - name: Test
+        run: cd frontend && npm test
+      - name: Build
+        run: cd frontend && npm run build

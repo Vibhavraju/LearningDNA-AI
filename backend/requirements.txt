@@ -1,0 +1,38 @@
+# Core API (works on Python 3.11 - 3.13; ranges instead of old exact pins)
+fastapi>=0.115,<1.0
+uvicorn[standard]>=0.30
+pydantic>=2.9,<3.0
+python-multipart>=0.0.9
+httpx>=0.27
+python-dotenv>=1.0
+
+# ML / numerics
+numpy>=1.26
+scipy>=1.13
+scikit-learn>=1.5
+pandas>=2.2
+joblib>=1.4
+
+# Exports + documents
+Pillow>=10.4
+reportlab>=4.2
+pypdf>=4.0
+
+# LLM providers (optional at runtime; falls back to mock)
+anthropic>=0.34
+
+# Database (optional: API runs fully in-memory without a DB)
+sqlalchemy[asyncio]>=2.0.35
+aiosqlite>=0.20
+asyncpg>=0.30
+alembic>=1.13
+pgvector>=0.3.4
+
+# Background jobs (only needed for the worker/beat containers)
+redis>=5.0
+celery[redis]>=5.4
+
+# Testing / lint
+pytest>=8.3
+pytest-asyncio>=0.24
+ruff>=0.6
